@@ -7,7 +7,11 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,34 +33,36 @@ class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(6)
             ->schema([
-                Section::make(__('Product'))
-                    ->columns(7)
+                Section::make(__('Produto'))
+                    ->columnSpan(4)
+                    ->description(__('Adicione, edite e gerencie seus produtos.'))
+                    ->icon('heroicon-o-shopping-bag')
+                    ->columns(2)
                     ->schema([
-                        Forms\Components\Toggle::make('is_active')
-                            ->label(__('Status'))
-                            ->default(true)
-                            ->inline(false)
-                            ->required(),
-                        Forms\Components\TextInput::make('name')
-                            ->label(__('Produto'))
-                            ->required()
-                            ->columnSpan(2)
-                            ->maxLength(255),
+
                         Forms\Components\TextInput::make('price')
                             ->label(__('Preço'))
                             ->required()
-                            ->columnSpan(1)
+
                             ->maxLength(255),
                         Forms\Components\TextInput::make('sku')
                             ->label('SKU')
                             ->required()
-                            ->columnSpan(1)
+
                             ->maxLength(255),
                         Forms\Components\Select::make('category_id')
                             ->label(__('Categoria'))
                             ->columnSpan(2)
                             ->options(Category::pluck('name', 'id'))
+                            ->required(),
+                        RichEditor::make('description')
+                            ->columnSpanFull(),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label(__('Status'))
+                            ->default(true)
+                            ->inline(false)
                             ->required(),
                     ]),
             ]);
