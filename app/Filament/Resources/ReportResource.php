@@ -7,8 +7,11 @@ use App\Filament\Resources\ReportResource\RelationManagers;
 use App\Models\Report;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -61,9 +64,23 @@ class ReportResource extends Resource
                     ->numeric()
                     ->alignCenter()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('is_dispatch')
+                Tables\Columns\TextColumn::make('is_dispatched')
                     ->label(__('Situação'))
+                    ->default(function ($record) {
+                        if ($record->stock->quantity > $record->minimus) {
+                            return 'em estoque';
+                        } else {
+                            return 'sem estoque';
+                        }
+                    })
                     ->alignCenter()
+                    ->color(function ($record) {
+                        if ($record->stock->quantity > $record->minimus) {
+                            return 'success';
+                        } else {
+                            return 'danger';
+                        }
+                    })
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -78,13 +95,23 @@ class ReportResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public function checkStock(Get $get, Set $set, $state)
+    {
+        $qte = 5;
+        $stock = $get('stock.quantity');
+
+        dd($qte);
     }
 
     public static function getRelations(): array
