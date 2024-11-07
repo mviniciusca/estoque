@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
+use App\Filament\Resources\ReportResource\Pages;
+use App\Filament\Resources\ReportResource\RelationManagers;
+use App\Models\Report;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,26 +13,26 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductResource extends Resource
+class ReportResource extends Resource
 {
-    protected static ?string $model = Product::class;
+    protected static ?string $model = Report::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('is_active')
+                Forms\Components\TextInput::make('minimus')
+                    ->required()
+                    ->numeric()
+                    ->default(3),
+                Forms\Components\Toggle::make('is_dispatch')
                     ->required(),
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('product_id')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sku')
-                    ->label('SKU')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('category_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('stock_id')
                     ->required()
                     ->numeric(),
             ]);
@@ -42,27 +42,15 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('is_active')
+                Tables\Columns\TextColumn::make('minimus')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_dispatch')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('sku')
-                    ->searchable()
-                    ->label('SKU')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('category.name')
+                Tables\Columns\TextColumn::make('product_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('location.section')
-                    ->label(__('Section'))
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('stock.quantity')
-                    ->label(__('Stock'))
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('location.geocode')
-                    ->label(__('Geocode'))
+                Tables\Columns\TextColumn::make('stock_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -97,9 +85,9 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListProducts::route('/'),
-            'create' => Pages\CreateProduct::route('/create'),
-            'edit'   => Pages\EditProduct::route('/{record}/edit'),
+            'index' => Pages\ListReports::route('/'),
+            'create' => Pages\CreateReport::route('/create'),
+            'edit' => Pages\EditReport::route('/{record}/edit'),
         ];
     }
 }
