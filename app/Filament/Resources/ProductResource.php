@@ -45,17 +45,19 @@ class ProductResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('Produto'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sku')
                     ->searchable()
                     ->label('SKU')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category.name')
+                    ->label(__('Categoria'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('location.section')
-                    ->label(__('Section'))
-                    ->numeric()
+                    ->label(__('Seção / Gaiola'))
+                    ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stock.quantity')
                     ->label(__('Stock'))
