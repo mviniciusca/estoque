@@ -37,7 +37,7 @@ class ProductResource extends Resource
             ->schema([
                 Section::make(__('Produto'))
                     ->columnSpan(4)
-                    ->description(__('Crie ou gerencie seus produtos. Campos com * são obrigatórios'))
+                    ->description(__('Crie ou gerencie seus produtos. Compos com * são obrigatórios'))
                     ->icon('heroicon-o-shopping-bag')
                     ->columns(4)
                     ->schema([
@@ -62,6 +62,7 @@ class ProductResource extends Resource
                             ->options(Category::pluck('name', 'id'))
                             ->required(),
                         RichEditor::make('description')
+                            ->label(__('Descrição'))
                             ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('Status'))
