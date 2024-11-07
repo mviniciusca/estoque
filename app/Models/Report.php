@@ -14,10 +14,6 @@ class Report extends Model
 
     protected $guarded = [];
 
-    /**
-     * Summary of stock
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function stock()
     {
         return $this->belongsTo(Stock::class);

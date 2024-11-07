@@ -46,9 +46,11 @@ class ReportResource extends Resource
                 Forms\Components\Select::make('product_id')
                     ->label(__('Produto'))
                     ->required()
+                    ->disabled()
                     ->options(Product::pluck('name', 'id')),
                 Forms\Components\Select::make('stock_id')
                     ->label(__('Estoque'))
+                    ->disabled()
                     ->options(Stock::pluck('id', 'id'))
                     ->required(),
             ]);
@@ -66,7 +68,7 @@ class ReportResource extends Resource
                     ->numeric()
                     ->alignCenter()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('stock.quantity')
+                Tables\Columns\TextColumn::make('product.stock.quantity')
                     ->label(__('Estoque'))
                     ->numeric()
                     ->alignCenter()
