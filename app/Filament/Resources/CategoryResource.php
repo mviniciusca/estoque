@@ -37,12 +37,12 @@ class CategoryResource extends Resource
                     ->columns(1)
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label(__('Nome'))
+                            ->label(__('Nome da Categoria'))
                             ->required()
                             ->maxLength(255),
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('Ativo'))
-                            ->inline(false)
+                            ->inline()
                             ->default(true)
                             ->required(),
                     ]),
