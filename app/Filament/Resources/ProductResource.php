@@ -42,9 +42,18 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading(__('Produtos'))
+            ->description(__('Listagem dos seus produtos no sistema!'))
             ->columns([
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label(__('Status'))
+                    ->alignCenter()
                     ->boolean(),
+                Tables\Columns\TextColumn::make('stock.quantity')
+                    ->label(__('Estoque'))
+                    ->alignCenter()
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Produto'))
                     ->searchable(),
@@ -59,11 +68,6 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('location.section')
                     ->label(__('Seção / Gaiola'))
                     ->alignCenter()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('stock.quantity')
-                    ->label(__('Estoque'))
-                    ->alignCenter()
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('location.geocode')
                     ->label(__('Geolocalização'))
