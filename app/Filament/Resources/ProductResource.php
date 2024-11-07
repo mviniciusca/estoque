@@ -37,20 +37,24 @@ class ProductResource extends Resource
             ->schema([
                 Section::make(__('Produto'))
                     ->columnSpan(4)
-                    ->description(__('Adicione, edite e gerencie seus produtos.'))
+                    ->description(__('Crie ou gerencie seus produtos.'))
                     ->icon('heroicon-o-shopping-bag')
-                    ->columns(2)
+                    ->columns(4)
                     ->schema([
-
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('Produto'))
+                            ->required()
+                            ->columnSpan(2)
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('price')
                             ->label(__('Preço'))
+                            ->prefix('R$')
                             ->required()
-
                             ->maxLength(255),
                         Forms\Components\TextInput::make('sku')
                             ->label('SKU')
+                            ->prefix('SKU -')
                             ->required()
-
                             ->maxLength(255),
                         Forms\Components\Select::make('category_id')
                             ->label(__('Categoria'))
@@ -64,6 +68,12 @@ class ProductResource extends Resource
                             ->default(true)
                             ->inline(false)
                             ->required(),
+                    ]),
+                Section::make()
+                    ->columnSpan(2)
+                    ->schema([
+                        FileUpload::make('image')
+                            ->label(__('Product Image')),
                     ]),
             ]);
     }
@@ -93,10 +103,10 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sku')
                     ->searchable()
                     ->label('SKU')
+                    ->prefix('SKU-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category.name')
                     ->label(__('Categoria'))
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('location.section')
                     ->label(__('Seção / Gaiola'))

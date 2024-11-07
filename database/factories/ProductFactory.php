@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'stock_id'    => Stock::factory(),
             'price'       => $this->faker->numberBetween(100, 10000) / 100,
             'name'        => $this->faker->company(),
-            'sku'         => 'SKU-'.$this->faker->unique()->numerify('####'),
+            'sku'         => $this->faker->unique()->numerify('####'),
         ];
     }
 }
