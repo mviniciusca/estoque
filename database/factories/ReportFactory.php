@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'is_dispatch' => $this->faker->boolean(),
+            'minimus'     => $this->faker->numberBetween(3, 10),
+            'product_id'  => Product::factory(),
+            'stock_id'    => Stock::factory(),
         ];
     }
 }

@@ -41,4 +41,9 @@ class Product extends Model
     {
         return $this->hasOne(Location::class);
     }
+
+    public function report()
+    {
+        return $this->hasOne(Report::class);
+    }
 }

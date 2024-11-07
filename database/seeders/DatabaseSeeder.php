@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 
         Product::factory(10)
             ->hasCategory(2)
+            ->hasReport()
             ->hasLocation()
             ->has(Stock::factory()->count(1))
             ->create();
