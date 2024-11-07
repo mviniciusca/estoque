@@ -17,7 +17,7 @@ class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
 
     public static function form(Form $form): Form
     {
@@ -69,9 +69,9 @@ class StockResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListStocks::route('/'),
+            'index'  => Pages\ListStocks::route('/'),
             'create' => Pages\CreateStock::route('/create'),
-            'edit' => Pages\EditStock::route('/{record}/edit'),
+            'edit'   => Pages\EditStock::route('/{record}/edit'),
         ];
     }
 }

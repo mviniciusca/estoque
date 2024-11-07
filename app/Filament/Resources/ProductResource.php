@@ -57,6 +57,10 @@ class ProductResource extends Resource
                     ->label(__('Section'))
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('stock.quantity')
+                    ->label(__('Geocode'))
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('location.geocode')
                     ->label(__('Geocode'))
                     ->numeric()

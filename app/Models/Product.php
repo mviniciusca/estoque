@@ -15,13 +15,9 @@ class Product extends Model
 
     protected $guarded = [];
 
-    /**
-     * Summary of stock
-     * @return void
-     */
     public function stock()
     {
-        $this->hasOne(Stock::class);
+        return $this->belongsTo(Stock::class);
     }
 
     /**
