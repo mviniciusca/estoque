@@ -40,6 +40,11 @@ class ReportResource extends Resource
                     ->label(__('Quantidade Mínima'))
                     ->numeric()
                     ->default(3),
+                Forms\Components\TextInput::make('maxims')
+                    ->required()
+                    ->label(__('Quantidade Máxima'))
+                    ->numeric()
+                    ->default(3),
                 Forms\Components\Toggle::make('is_dispatch')
                     ->hidden()
                     ->required(),
@@ -65,6 +70,11 @@ class ReportResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('minimus')
                     ->label(__('Qte. Mínima'))
+                    ->numeric()
+                    ->alignCenter()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('maxims')
+                    ->label(__('Qte. Máxima'))
                     ->numeric()
                     ->alignCenter()
                     ->sortable(),

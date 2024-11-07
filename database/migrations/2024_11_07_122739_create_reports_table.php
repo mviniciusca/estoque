@@ -15,7 +15,7 @@ return new class() extends Migration {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->integer('minimus')->default(5);
-            $table->integer('maxims')->default(100);
+            $table->integer('maxims')->default(10);
             $table->boolean('is_dispatch')->default(false);
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Stock::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
