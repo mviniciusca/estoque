@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -30,13 +31,21 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('is_active')
-                    ->label(__('Ativo'))
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->label(__('Nome'))
-                    ->required()
-                    ->maxLength(255),
+                Section::make(__('Categoria'))
+                    ->description(__('Crie ou gerencie suas categorias. Compos com * são obrigatórios'))
+                    ->icon('heroicon-o-shopping-bag')
+                    ->columns(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('Nome'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label(__('Ativo'))
+                            ->inline(false)
+                            ->default(true)
+                            ->required(),
+                    ]),
             ]);
     }
 
