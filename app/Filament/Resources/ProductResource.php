@@ -43,10 +43,15 @@ class ProductResource extends Resource
                             ->required()
                             ->columnSpan(2)
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('price')
+                            ->label(__('Preço'))
+                            ->required()
+                            ->columnSpan(1)
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('sku')
                             ->label('SKU')
                             ->required()
-                            ->columnSpan(2)
+                            ->columnSpan(1)
                             ->maxLength(255),
                         Forms\Components\Select::make('category_id')
                             ->label(__('Categoria'))
@@ -74,6 +79,10 @@ class ProductResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Produto'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->label(__('Preço'))
+                    ->prefix('R$ ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sku')
                     ->searchable()

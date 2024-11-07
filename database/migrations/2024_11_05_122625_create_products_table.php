@@ -16,6 +16,7 @@ return new class() extends Migration {
             $table->id();
             $table->boolean('is_active')->default(true);
             $table->string('name');
+            $table->decimal('price', 10, 2);
             $table->string('sku')->unique();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Stock::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
