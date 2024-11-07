@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,18 +30,25 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sku')
-                    ->label('SKU')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('category_id')
-                    ->required()
-                    ->numeric(),
+                Section::make(__('Product'))
+                    ->columns(6)
+                    ->schema([
+                        Forms\Components\Toggle::make('is_active')
+                            ->label(__('Status'))
+                            ->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('Produto'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('sku')
+                            ->label('SKU')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('category_id')
+                            ->label(__('Categoria'))
+                            ->options(Category::pluck('name', 'id'))
+                            ->required(),
+                    ]),
             ]);
     }
 
