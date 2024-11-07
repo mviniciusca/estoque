@@ -30,8 +30,10 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Toggle::make('is_active')
+                    ->label(__('Ativo'))
                     ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->label(__('Nome'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -40,10 +42,15 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading(__('Categorias'))
+            ->description(__('Listagem das suas categorias no sistema!'))
             ->columns([
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label(__('Ativo'))
+                    ->alignCenter()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('Nome'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
