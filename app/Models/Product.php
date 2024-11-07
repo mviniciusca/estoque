@@ -15,18 +15,30 @@ class Product extends Model
 
     protected $guarded = [];
 
+    /**
+     * Summary of stock
+     * @return void
+     */
     public function stock()
     {
         $this->belongsTo(Stock::class);
     }
 
+    /**
+     * Summary of category
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Summary of location
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->hasOne(Location::class);
     }
 }

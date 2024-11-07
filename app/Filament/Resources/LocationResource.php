@@ -29,9 +29,9 @@ class LocationResource extends Resource
                 Forms\Components\TextInput::make('geocode')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('product_id')
-                    ->relationship('product', 'name')
-                    ->required(),
+                Forms\Components\TextInput::make('product_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -43,7 +43,7 @@ class LocationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('geocode')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('product.name')
+                Tables\Columns\TextColumn::make('product_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

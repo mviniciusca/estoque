@@ -19,7 +19,7 @@ class LocationFactory extends Factory
     {
         return [
             'section' => $this->faker->randomLetter() .  $this->faker->randomDigit(),
-            'geocode' => $this->faker->localCoordinates(),
+            'geocode' => $this->faker->numerify('###'),
             'product_id' => Product::factory(),
         ];
     }
