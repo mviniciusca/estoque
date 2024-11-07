@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Stock;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Stock;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
     /** @use HasFactory<\Database\Factories\ReportFactory> */
     use HasFactory;
+
     protected $guarded = [];
+
     /**
      * Summary of stock
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
