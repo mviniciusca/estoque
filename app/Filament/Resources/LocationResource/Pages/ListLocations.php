@@ -10,10 +10,12 @@ class ListLocations extends ListRecords
 {
     protected static string $resource = LocationResource::class;
 
+    protected static ?string $title = 'Localização Setorial';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()->icon('heroicon-o-map-pin')->label(__('Nova Localização')),
         ];
     }
 }

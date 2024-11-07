@@ -10,6 +10,8 @@ class ListReports extends ListRecords
 {
     protected static string $resource = ReportResource::class;
 
+    protected static ?string $title = 'Relatórios';
+
     protected function getHeaderActions(): array
     {
         return [

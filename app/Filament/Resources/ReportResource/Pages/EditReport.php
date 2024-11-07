@@ -10,6 +10,8 @@ class EditReport extends EditRecord
 {
     protected static string $resource = ReportResource::class;
 
+    protected static ?string $title = 'Editar Relatório';
+
     protected function getHeaderActions(): array
     {
         return [
