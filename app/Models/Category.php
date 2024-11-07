@@ -13,6 +13,10 @@ class Category extends Model
     use HasFactory;
     protected $guarded = [];
 
+    /**
+     * Summary of product
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function product(): HasMany
     {
         return $this->hasMany(Product::class);
