@@ -13,6 +13,10 @@ class Stock extends Model
 
     protected $guarded = [];
 
+    /**
+     * Summary of product
+     * @return void
+     */
     public function product()
     {
         $this->belongsTo(Product::class);
