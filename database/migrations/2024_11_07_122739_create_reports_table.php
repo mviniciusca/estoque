@@ -14,6 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->integer('minimus')->default(3);
+            $table->boolean('is_dispatch')->default(false);
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Stock::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
