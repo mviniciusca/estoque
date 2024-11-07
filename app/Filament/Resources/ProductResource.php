@@ -31,21 +31,26 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 Section::make(__('Product'))
-                    ->columns(6)
+                    ->columns(7)
                     ->schema([
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('Status'))
+                            ->default(true)
+                            ->inline(false)
                             ->required(),
                         Forms\Components\TextInput::make('name')
                             ->label(__('Produto'))
                             ->required()
+                            ->columnSpan(2)
                             ->maxLength(255),
                         Forms\Components\TextInput::make('sku')
                             ->label('SKU')
                             ->required()
+                            ->columnSpan(2)
                             ->maxLength(255),
                         Forms\Components\Select::make('category_id')
                             ->label(__('Categoria'))
+                            ->columnSpan(2)
                             ->options(Category::pluck('name', 'id'))
                             ->required(),
                     ]),
