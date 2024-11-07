@@ -19,8 +19,8 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'section'    => Str::upper($this->faker->randomLetter()).$this->faker->randomDigit(),
-            'geocode'    => $this->faker->numerify('-######').' / '.$this->faker->numerify('######'),
+            'section'    => Str::upper($this->faker->randomLetter()).' / '.$this->faker->randomDigit(),
+            'geocode'    => $this->faker->numerify('-######').' '.$this->faker->numerify('######'),
             'product_id' => Product::factory(),
         ];
     }
