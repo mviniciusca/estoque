@@ -10,4 +10,4 @@ Route::get('/', function () {
 Route::get('/admin/login', function () {
     Auth::loginUsingId(User::first()->id);
     return redirect(route('filament.admin.pages.dashboard'));
-})->name('web.login');
+})->name('filament.admin.auth.login');

@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.dev',
         ]);
 
-        Product::factory(10)
-        ->has(Category::factory())
+        Category::factory(2)
+        ->has(Product::factory(5))
         ->create();
     }
 }
