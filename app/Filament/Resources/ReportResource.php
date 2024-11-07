@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReportResource\Pages;
 use App\Filament\Resources\ReportResource\RelationManagers;
+use App\Models\Product;
 use App\Models\Report;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -31,17 +32,23 @@ class ReportResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(3)
             ->schema([
                 Forms\Components\TextInput::make('minimus')
                     ->required()
+                    ->label(__('Quantidade Mínima'))
                     ->numeric()
                     ->default(3),
                 Forms\Components\Toggle::make('is_dispatch')
+                    ->hidden()
                     ->required(),
-                Forms\Components\TextInput::make('product_id')
+                Forms\Components\Select::make('product_id')
+                    ->label(__('Produto'))
                     ->required()
-                    ->numeric(),
+                    ->options(Product::pluck('name', 'id')),
                 Forms\Components\TextInput::make('stock_id')
+                    ->label(__('Stock'))
+                    ->hidden()
                     ->required()
                     ->numeric(),
             ]);
