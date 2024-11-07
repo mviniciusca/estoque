@@ -6,6 +6,7 @@ use App\Filament\Resources\ReportResource\Pages;
 use App\Filament\Resources\ReportResource\RelationManagers;
 use App\Models\Product;
 use App\Models\Report;
+use App\Models\Stock;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -46,11 +47,10 @@ class ReportResource extends Resource
                     ->label(__('Produto'))
                     ->required()
                     ->options(Product::pluck('name', 'id')),
-                Forms\Components\TextInput::make('stock_id')
-                    ->label(__('Stock'))
-                    ->hidden()
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('stock_id')
+                    ->label(__('Estoque'))
+                    ->options(Stock::pluck('id', 'id'))
+                    ->required(),
             ]);
     }
 

@@ -15,7 +15,7 @@ class ListReports extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->icon('heroicon-o-document')->label(__('Novo Relatório')),
+            //  Actions\CreateAction::make()->icon('heroicon-o-document')->label(__('Novo Relatório')),
         ];
     }
 }
