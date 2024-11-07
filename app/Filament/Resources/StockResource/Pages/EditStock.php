@@ -10,6 +10,8 @@ class EditStock extends EditRecord
 {
     protected static string $resource = StockResource::class;
 
+    protected static ?string $title = 'Editar Estoque';
+
     protected function getHeaderActions(): array
     {
         return [
