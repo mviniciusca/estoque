@@ -13,6 +13,10 @@ class Stock extends Model
 
     protected $guarded = [];
 
+    /**
+     * Summary of product
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function product()
     {
         return $this->belongsTo(Product::class);
