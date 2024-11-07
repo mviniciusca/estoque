@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LocationResource\Pages;
 use App\Filament\Resources\LocationResource\RelationManagers;
 use App\Models\Location;
+use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -30,15 +32,24 @@ class LocationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('section')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('geocode')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('product_id')
-                    ->required()
-                    ->numeric(),
+                Section::make(__('Locação Setorial'))
+                    ->description(__('Crie ou gerencie suas locações setoriais. Compos com * são obrigatórios'))
+                    ->icon('heroicon-o-map-pin')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('section')
+                            ->label(__('Nome da Seção'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('geocode')
+                            ->label(__('Geolocalização'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('product_id')
+                            ->label(__('Produto'))
+                            ->options(Product::pluck('name', 'id'))
+                            ->required(),
+                    ]),
             ]);
     }
 

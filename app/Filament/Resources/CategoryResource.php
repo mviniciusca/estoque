@@ -33,7 +33,7 @@ class CategoryResource extends Resource
             ->schema([
                 Section::make(__('Categoria'))
                     ->description(__('Crie ou gerencie suas categorias. Compos com * são obrigatórios'))
-                    ->icon('heroicon-o-shopping-bag')
+                    ->icon('heroicon-o-tag')
                     ->columns(1)
                     ->schema([
                         Forms\Components\TextInput::make('name')
