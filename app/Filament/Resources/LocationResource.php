@@ -39,13 +39,13 @@ class LocationResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('product.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('section')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('geocode')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('product_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

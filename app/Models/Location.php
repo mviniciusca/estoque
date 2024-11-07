@@ -15,12 +15,9 @@ class Location extends Model
     protected $guarded = [];
 
 
-    /**
-     * Summary of product
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function product(): HasOne
+
+    public function product()
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
     }
 }
