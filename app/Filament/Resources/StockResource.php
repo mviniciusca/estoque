@@ -34,6 +34,8 @@ class StockResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('product.name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
