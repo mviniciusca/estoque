@@ -7,6 +7,8 @@ use App\Filament\Resources\StockResource\RelationManagers;
 use App\Models\Stock;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -35,8 +37,10 @@ class StockResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('product.name')
+                    ->label(__('Produto'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->label(__('Quantidade'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
