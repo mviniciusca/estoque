@@ -84,20 +84,28 @@ class ReportResource extends Resource
                     ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('is_dispatched')
+                    ->alignEnd()
                     ->label(__('Situação'))
                     ->default(function ($record) {
-                        if ($record->product->stock->quantity > $record->minimus) {
-                            return 'em estoque';
-                        } else {
+                        if ($record->product->stock->quantity == 0) {
                             return 'sem estoque';
+                        } elseif ($record->product->stock->quantity <= $record->minimus) {
+                            return 'baixo estoque';
+                        } elseif ($record->product->stock->quantity > $record->maxims) {
+                            return 'excesso de estoque';
+                        } else {
+                            return 'em estoque';
                         }
                     })
-                    ->alignCenter()
                     ->color(function ($record) {
-                        if ($record->product->stock->quantity > $record->minimus) {
-                            return 'success';
-                        } else {
+                        if ($record->product->stock->quantity == 0) {
                             return 'danger';
+                        } elseif ($record->product->stock->quantity <= $record->minimus) {
+                            return 'warning';
+                        } elseif ($record->product->stock->quantity > $record->maxims) {
+                            return 'info';
+                        } else {
+                            return 'success';
                         }
                     })
                     ->badge(),
