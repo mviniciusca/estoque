@@ -37,7 +37,7 @@ class ProductResource extends Resource
             ->schema([
                 Section::make(__('Produto'))
                     ->columnSpan(4)
-                    ->description(__('Crie ou gerencie seus produtos.'))
+                    ->description(__('Crie ou gerencie seus produtos. Campos com * são obrigatórios'))
                     ->icon('heroicon-o-shopping-bag')
                     ->columns(4)
                     ->schema([
@@ -58,7 +58,7 @@ class ProductResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Select::make('category_id')
                             ->label(__('Categoria'))
-                            ->columnSpan(2)
+                            ->columnSpanFull()
                             ->options(Category::pluck('name', 'id'))
                             ->required(),
                         RichEditor::make('description')
@@ -73,7 +73,7 @@ class ProductResource extends Resource
                     ->columnSpan(2)
                     ->schema([
                         FileUpload::make('image')
-                            ->label(__('Product Image')),
+                            ->label(__('Imagem do Produto')),
                     ]),
             ]);
     }
