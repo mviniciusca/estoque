@@ -76,7 +76,7 @@ class ReportResource extends Resource
                 Tables\Columns\TextColumn::make('is_dispatched')
                     ->label(__('Situação'))
                     ->default(function ($record) {
-                        if ($record->stock->quantity > $record->minimus) {
+                        if ($record->product->stock->quantity > $record->minimus) {
                             return 'em estoque';
                         } else {
                             return 'sem estoque';
@@ -84,7 +84,7 @@ class ReportResource extends Resource
                     })
                     ->alignCenter()
                     ->color(function ($record) {
-                        if ($record->stock->quantity > $record->minimus) {
+                        if ($record->product->stock->quantity > $record->minimus) {
                             return 'success';
                         } else {
                             return 'danger';
