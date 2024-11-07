@@ -48,17 +48,23 @@ class ReportResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('product.name')
+                    ->label(__('Produto'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('minimus')
+                    ->label(__('Qte. Mínima'))
                     ->numeric()
+                    ->alignCenter()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_dispatch')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('product_id')
+                Tables\Columns\TextColumn::make('stock.quantity')
+                    ->label(__('Estoque'))
                     ->numeric()
+                    ->alignCenter()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('stock_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('is_dispatch')
+                    ->label(__('Situação'))
+                    ->alignCenter()
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
