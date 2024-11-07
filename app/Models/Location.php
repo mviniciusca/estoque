@@ -15,10 +15,6 @@ class Location extends Model
 
     protected $guarded = [];
 
-    /**
-     * Summary of product
-     * @return BelongsTo
-     */
     public function product()
     {
         return $this->belongsTo(Product::class);

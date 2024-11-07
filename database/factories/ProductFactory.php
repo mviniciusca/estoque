@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +20,9 @@ class ProductFactory extends Factory
     {
         return [
             'category_id' => Category::factory(),
-            'name' => $this->faker->city(),
-            'sku' => 'SKU-' . $this->faker->unique()->numerify('####'),
+            'stock_id'    => Stock::factory(),
+            'name'        => $this->faker->city(),
+            'sku'         => 'SKU-'.$this->faker->unique()->numerify('####'),
         ];
     }
 }

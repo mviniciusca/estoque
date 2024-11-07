@@ -17,7 +17,7 @@ class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -27,9 +27,6 @@ class StockResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('product_id')
-                    ->required()
-                    ->numeric(),
             ]);
     }
 
@@ -38,9 +35,6 @@ class StockResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('product_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -75,9 +69,9 @@ class StockResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListStocks::route('/'),
+            'index' => Pages\ListStocks::route('/'),
             'create' => Pages\CreateStock::route('/create'),
-            'edit'   => Pages\EditStock::route('/{record}/edit'),
+            'edit' => Pages\EditStock::route('/{record}/edit'),
         ];
     }
 }

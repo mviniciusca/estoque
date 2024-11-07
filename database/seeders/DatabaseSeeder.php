@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Product;
 use App\Models\Category;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Location;
+use App\Models\Product;
+use App\Models\Stock;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,14 +20,14 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            'name'  => 'Test User',
             'email' => 'admin@admin.dev',
         ]);
 
-        Product::factory(5)
-        ->hasCategory()
-        ->hasLocation()
-        ->create();
-
+        Product::factory()
+            ->hasCategory()
+            ->hasLocation()
+            ->has(Stock::factory()->count(1))
+            ->create();
     }
 }

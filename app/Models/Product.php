@@ -21,7 +21,7 @@ class Product extends Model
      */
     public function stock()
     {
-        $this->belongsTo(Stock::class);
+        $this->hasOne(Stock::class);
     }
 
     /**
