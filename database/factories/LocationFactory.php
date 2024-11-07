@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'section' => $this->faker->randomLetter() .  $this->faker->randomDigit(),
+            'geocode' => $this->faker->localCoordinates(),
+            'product_id' => Product::factory(),
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,8 +23,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.dev',
         ]);
 
-        Category::factory(2)
-        ->has(Product::factory(5))
-        ->create();
+
     }
 }
