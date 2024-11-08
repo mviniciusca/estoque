@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Stock;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
@@ -44,6 +45,13 @@ class ProductResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->label(__('Produto'))
                             ->required()
+                            ->columnSpan(2)
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('stock.id')
+                            ->label(__('Estoque'))
+                            ->hidden()
+                            ->required()
+                            ->default(Stock::latest('id')->value('id') + 1)
                             ->columnSpan(2)
                             ->maxLength(255),
                         Forms\Components\TextInput::make('price')
