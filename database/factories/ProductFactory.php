@@ -20,7 +20,6 @@ class ProductFactory extends Factory
     {
         return [
             'category_id' => Category::factory(),
-            'stock_id'    => Stock::factory(),
             'price'       => $this->faker->numberBetween(100, 10000) / 100,
             'name'        => $this->faker->company(),
             'sku'         => $this->faker->unique()->numerify('####'),

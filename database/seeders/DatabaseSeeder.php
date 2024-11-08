@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             ->hasCategory(2)
             ->hasReport()
             ->hasLocation()
-            ->has(Stock::factory()->count(1))
+            ->hasStock()
             ->create();
     }
 }

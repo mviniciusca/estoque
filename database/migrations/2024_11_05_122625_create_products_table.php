@@ -21,7 +21,6 @@ return new class() extends Migration {
             $table->text('description')->nullable();
             $table->string('sku')->unique();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(Stock::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

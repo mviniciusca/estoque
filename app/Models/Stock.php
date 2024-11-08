@@ -14,13 +14,9 @@ class Stock extends Model
 
     protected $guarded = [];
 
-    /**
-     * Summary of product
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function product()
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function report()
