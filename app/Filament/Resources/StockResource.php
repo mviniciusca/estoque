@@ -7,8 +7,6 @@ use App\Filament\Resources\StockResource\RelationManagers;
 use App\Models\Stock;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,13 +17,7 @@ class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
-
-    protected static ?string $navigationGroup = 'Gestão & Estoque';
-
-    protected static ?string $navigationLabel = 'Estoque';
-
-    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -35,6 +27,9 @@ class StockResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
+                Forms\Components\TextInput::make('product_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -42,11 +37,10 @@ class StockResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product.name')
-                    ->label(__('Produto'))
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->label(__('Quantidade'))
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('product_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -54,6 +48,10 @@ class StockResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -81,9 +79,9 @@ class StockResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListStocks::route('/'),
+            'index' => Pages\ListStocks::route('/'),
             'create' => Pages\CreateStock::route('/create'),
-            'edit'   => Pages\EditStock::route('/{record}/edit'),
+            'edit' => Pages\EditStock::route('/{record}/edit'),
         ];
     }
 }

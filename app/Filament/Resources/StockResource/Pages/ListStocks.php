@@ -10,8 +10,6 @@ class ListStocks extends ListRecords
 {
     protected static string $resource = StockResource::class;
 
-    protected static ?string $title = 'Estoque';
-
     protected function getHeaderActions(): array
     {
         return [

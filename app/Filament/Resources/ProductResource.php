@@ -4,19 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\Stock;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,104 +18,62 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationGroup = 'E-Commerce';
-
-    protected static ?string $navigationLabel = 'Produtos';
-
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->columns(6)
             ->schema([
-                Section::make(__('Produto'))
-                    ->columnSpan(4)
-                    ->description(__('Crie ou gerencie seus produtos. Compos com * são obrigatórios'))
-                    ->icon('heroicon-o-shopping-bag')
-                    ->columns(4)
+                Forms\Components\Toggle::make('is_active')
+                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Group::make()
+                    ->relationship('stock')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label(__('Produto'))
-                            ->required()
-                            ->columnSpan(2)
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('stock.id')
-                            ->label(__('Estoque'))
-                            ->hidden()
-                            ->required()
-                            ->default(Stock::latest('id')->value('id') + 1)
-                            ->columnSpan(2)
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('price')
-                            ->label(__('Preço'))
-                            ->prefix('R$')
+                        Forms\Components\TextInput::make('quantity')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('sku')
-                            ->label('SKU')
-                            ->prefix('SKU -')
+                        Forms\Components\TextInput::make('product_id')
+                            ->default(Product::latest('id')->value('id') + 1)
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Select::make('category_id')
-                            ->label(__('Categoria'))
-                            ->columnSpanFull()
-                            ->options(Category::pluck('name', 'id'))
-                            ->required(),
-                        RichEditor::make('description')
-                            ->label(__('Descrição'))
-                            ->columnSpanFull(),
-                        Forms\Components\Toggle::make('is_active')
-                            ->label(__('Status'))
-                            ->default(true)
-                            ->inline(false)
-                            ->required(),
                     ]),
-                Section::make()
-                    ->columnSpan(2)
-                    ->schema([
-                        FileUpload::make('image')
-                            ->label(__('Imagem do Produto')),
-                    ]),
+                Forms\Components\TextInput::make('price')
+                    ->required()
+                    ->numeric()
+                    ->prefix('$'),
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('sku')
+                    ->label('SKU')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('category_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->heading(__('Produtos'))
-            ->description(__('Listagem dos seus produtos no sistema!'))
             ->columns([
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label(__('Status'))
-                    ->alignCenter()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('stock.quantity')
-                    ->label(__('Estoque'))
-                    ->alignCenter()
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('Produto'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->label(__('Preço'))
-                    ->prefix('R$ ')
-                    ->searchable(),
+                    ->money()
+                    ->sortable(),
+                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('sku')
-                    ->searchable()
                     ->label('SKU')
-                    ->prefix('SKU-')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label(__('Categoria'))
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('location.section')
-                    ->label(__('Seção / Gaiola'))
-                    ->alignCenter()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('location.geocode')
-                    ->label(__('Geolocalização'))
+                Tables\Columns\TextColumn::make('category_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -133,14 +84,16 @@ class ProductResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
