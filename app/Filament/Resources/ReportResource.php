@@ -86,28 +86,28 @@ class ReportResource extends Resource
                 Tables\Columns\TextColumn::make('is_dispatched')
                     ->alignEnd()
                     ->label(__('Situação'))
-                    // ->default(function ($record) {
-                    //     if ($record->product->stock->quantity == 0) {
-                    //         return 'sem estoque';
-                    //     } elseif ($record->product->stock->quantity <= $record->minimus) {
-                    //         return 'baixo estoque';
-                    //     } elseif ($record->product->stock->quantity > $record->maxims) {
-                    //         return 'excesso de estoque';
-                    //     } else {
-                    //         return 'em estoque';
-                    //     }
-                    // })
-                    // ->color(function ($record) {
-                    //     if ($record->product->stock->quantity == 0) {
-                    //         return 'danger';
-                    //     } elseif ($record->product->stock->quantity <= $record->minimus) {
-                    //         return 'warning';
-                    //     } elseif ($record->product->stock->quantity > $record->maxims) {
-                    //         return 'info';
-                    //     } else {
-                    //         return 'success';
-                    //     }
-                    // })
+                    ->default(function ($record) {
+                        if ($record->stock->quantity == 0) {
+                            return 'sem estoque';
+                        } elseif ($record->stock->quantity <= $record->minimus) {
+                            return 'baixo estoque';
+                        } elseif ($record->stock->quantity > $record->maxims) {
+                            return 'excesso de estoque';
+                        } else {
+                            return 'em estoque';
+                        }
+                    })
+                    ->color(function ($record) {
+                        if ($record->stock->quantity == 0) {
+                            return 'danger';
+                        } elseif ($record->stock->quantity <= $record->minimus) {
+                            return 'warning';
+                        } elseif ($record->stock->quantity > $record->maxims) {
+                            return 'info';
+                        } else {
+                            return 'success';
+                        }
+                    })
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
