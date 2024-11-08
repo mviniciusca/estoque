@@ -21,8 +21,8 @@ class ReportFactory extends Factory
         return [
             'is_dispatch' => $this->faker->boolean(),
             'minimus'     => $this->faker->numberBetween(3, 10),
-            'product_id'  => Product::factory(),
-            'stock_id'    => Stock::factory(),
+            //'product_id'  => Product::factory(),
+            //'stock_id'    => Stock::factory(),
         ];
     }
 }

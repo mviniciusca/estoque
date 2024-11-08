@@ -37,10 +37,10 @@ class StockResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('quantity')
+                Tables\Columns\TextColumn::make('product.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('product_id')
+                Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -79,9 +79,9 @@ class StockResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListStocks::route('/'),
+            'index'  => Pages\ListStocks::route('/'),
             'create' => Pages\CreateStock::route('/create'),
-            'edit' => Pages\EditStock::route('/{record}/edit'),
+            'edit'   => Pages\EditStock::route('/{record}/edit'),
         ];
     }
 }
