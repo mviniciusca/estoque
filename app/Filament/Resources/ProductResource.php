@@ -64,18 +64,44 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
+                Tables\Columns\TextColumn::make('is_dispatched')
+                    ->alignLeft()
+                    ->label(__('Situação'))
+                    ->default(function ($record) {
+                        if ($record->stock->quantity == 0) {
+                            return 'sem estoque';
+                        } elseif ($record->stock->quantity <= $record->stock->report->minimus) {
+                            return 'baixo estoque';
+                        } elseif ($record->stock->quantity > $record->stock->report->maxims) {
+                            return 'excesso de estoque';
+                        } else {
+                            return 'em estoque';
+                        }
+                    })
+                    ->color(function ($record) {
+                        if ($record->stock->quantity == 0) {
+                            return 'danger';
+                        } elseif ($record->stock->quantity <= $record->stock->report->minimus) {
+                            return 'warning';
+                        } elseif ($record->stock->quantity > $record->stock->report->maxims) {
+                            return 'info';
+                        } else {
+                            return 'success';
+                        }
+                    })
+                    ->badge(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stock.quantity')
-                    ->label('SKU')
+                    ->label('Estoque')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category_id')
+                Tables\Columns\TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
