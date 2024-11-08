@@ -22,6 +22,7 @@ return new class() extends Migration {
             $table->string('sku')->unique();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
