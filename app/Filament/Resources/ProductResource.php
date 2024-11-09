@@ -5,9 +5,12 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -32,38 +35,44 @@ class ProductResource extends Resource
                     ->icon('heroicon-o-shopping-bag')
                     ->description(__('Crie o seu produto.'))
                     ->schema([
-                        Forms\Components\Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->required(),
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
                         Group::make()
                             ->relationship('stock')
                             ->schema([
-                                Forms\Components\TextInput::make('quantity')
+                                TextInput::make('quantity')
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('product_id')
+                                TextInput::make('product_id')
                                     ->default(Product::latest('id')->value('id') + 1)
                                     ->required()
                                     ->maxLength(255),
                             ]),
-                        Forms\Components\TextInput::make('price')
+                        TextInput::make('price')
                             ->required()
                             ->numeric()
                             ->prefix('$'),
-                        Forms\Components\FileUpload::make('image')
+                        FileUpload::make('image')
                             ->image(),
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('sku')
+                        TextInput::make('sku')
                             ->label('SKU')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('category_id')
+                        TextInput::make('category_id')
                             ->required()
                             ->numeric(),
                     ]),
+                Section::make(__('Imagem'))
+                    ->columnSpan(2)
+                    ->columns(1)
+                    ->icon('heroicon-o-cube')
+                    ->description(__('Imagem do produto.'))
+                    ->schema([]),
                 Section::make(__('Estoque'))
                     ->columnSpan(2)
                     ->columns(1)
