@@ -17,6 +17,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -110,8 +111,11 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                ToggleColumn::make('is_active')
+                    ->label('Ativo'),
+                Tables\Columns\TextColumn::make('sku')
+                    ->label('SKU')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('is_dispatched')
                     ->alignLeft()
                     ->label(__('Situação'))
@@ -123,18 +127,19 @@ class ProductResource extends Resource
                     })
                     ->badge(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Produto')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category.name')
+                    ->label('Categoria')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
+                    ->label('Preço')
+                    ->prefix('R$ ')
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stock.quantity')
                     ->label('Estoque')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('sku')
-                    ->label('SKU')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
