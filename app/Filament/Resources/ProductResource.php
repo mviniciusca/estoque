@@ -7,6 +7,7 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,38 +24,46 @@ class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(6)
             ->schema([
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Group::make()
-                    ->relationship('stock')
+                Section::make(__('Product'))
+                    ->columnSpan(4)
+                    ->columns(3)
+                    ->icon('heroicon-o-shopping-bag')
+                    ->description(__('Create your product.'))
                     ->schema([
-                        Forms\Components\TextInput::make('quantity')
+                        Forms\Components\Toggle::make('is_active')
+                            ->required(),
+                        Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('product_id')
-                            ->default(Product::latest('id')->value('id') + 1)
+                        Group::make()
+                            ->relationship('stock')
+                            ->schema([
+                                Forms\Components\TextInput::make('quantity')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('product_id')
+                                    ->default(Product::latest('id')->value('id') + 1)
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
+                        Forms\Components\TextInput::make('price')
+                            ->required()
+                            ->numeric()
+                            ->prefix('$'),
+                        Forms\Components\FileUpload::make('image')
+                            ->image(),
+                        Forms\Components\Textarea::make('description')
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('sku')
+                            ->label('SKU')
                             ->required()
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('category_id')
+                            ->required()
+                            ->numeric(),
                     ]),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('sku')
-                    ->label('SKU')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('category_id')
-                    ->required()
-                    ->numeric(),
             ]);
     }
 
