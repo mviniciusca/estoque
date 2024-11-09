@@ -26,11 +26,11 @@ class ProductResource extends Resource
         return $form
             ->columns(6)
             ->schema([
-                Section::make(__('Product'))
+                Section::make(__('Produto'))
                     ->columnSpan(4)
                     ->columns(3)
                     ->icon('heroicon-o-shopping-bag')
-                    ->description(__('Create your product.'))
+                    ->description(__('Crie o seu produto.'))
                     ->schema([
                         Forms\Components\Toggle::make('is_active')
                             ->required(),
@@ -64,6 +64,12 @@ class ProductResource extends Resource
                             ->required()
                             ->numeric(),
                     ]),
+                Section::make(__('Estoque'))
+                    ->columnSpan(2)
+                    ->columns(1)
+                    ->icon('heroicon-o-cube')
+                    ->description(__('Controle de estoque.'))
+                    ->schema([]),
             ]);
     }
 
