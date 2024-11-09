@@ -68,26 +68,10 @@ class ProductResource extends Resource
                     ->alignLeft()
                     ->label(__('Situação'))
                     ->default(function ($record) {
-                        if ($record->stock->quantity == 0) {
-                            return 'sem estoque';
-                        } elseif ($record->stock->quantity <= $record->stock->report->minimus) {
-                            return 'baixo estoque';
-                        } elseif ($record->stock->quantity > $record->stock->report->maxims) {
-                            return 'excesso de estoque';
-                        } else {
-                            return 'em estoque';
-                        }
+                        return self::checkStock($record, false);
                     })
                     ->color(function ($record) {
-                        if ($record->stock->quantity == 0) {
-                            return 'danger';
-                        } elseif ($record->stock->quantity <= $record->stock->report->minimus) {
-                            return 'warning';
-                        } elseif ($record->stock->quantity > $record->stock->report->maxims) {
-                            return 'info';
-                        } else {
-                            return 'success';
-                        }
+                        return self::checkStock($record, true);
                     })
                     ->badge(),
                 Tables\Columns\TextColumn::make('name')
@@ -144,5 +128,24 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit'   => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    /**
+     * Summary of checkStock
+     * @param mixed $record
+     * @param bool $isColor
+     * @return string
+     */
+    public static function checkStock($record, bool $isColor): string
+    {
+        if ($record->stock->quantity == 0) {
+            return $isColor ? 'danger' : 'sem estoque';
+        } elseif ($record->stock->quantity <= $record->stock->report->minimus) {
+            return $isColor ? 'warning' : 'baixo estoque';
+        } elseif ($record->stock->quantity > $record->stock->report->maxims) {
+            return $isColor ? 'info' : 'excesso de estoque';
+        } else {
+            return $isColor ? 'success' : 'em estoque';
+        }
     }
 }
