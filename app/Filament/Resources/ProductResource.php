@@ -44,22 +44,25 @@ class ProductResource extends Resource
                                     ->label(__('Nome do Produto'))
                                     ->required()
                                     ->maxLength(255),
-
                                 TextInput::make('price')
+                                    ->label(__('Preço'))
                                     ->required()
                                     ->numeric()
-                                    ->prefix('$'),
-
-                                RichEditor::make('description')
-                                    ->columnSpanFull(),
+                                    ->prefix('R$'),
                                 TextInput::make('sku')
                                     ->label('SKU')
                                     ->required()
                                     ->maxLength(255),
                                 Select::make('category_id')
+                                    ->label(__('Categoria'))
                                     ->options(Category::pluck('name', 'id'))
                                     ->required(),
+                                RichEditor::make('description')
+                                    ->label(__('Descrição'))
+                                    ->columnSpanFull(),
                                 Toggle::make('is_active')
+                                    ->default(true)
+                                    ->label(__('Ativo'))
                                     ->required(),
                             ]),
                     ]),
