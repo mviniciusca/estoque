@@ -52,6 +52,7 @@ class ProductResource extends Resource
                                     ->prefix('R$'),
                                 TextInput::make('sku')
                                     ->label('SKU')
+                                    ->unique('product', 'sku')
                                     ->required()
                                     ->maxLength(255),
                                 Select::make('category_id')
