@@ -4,10 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -33,41 +36,31 @@ class ProductResource extends Resource
                     ->columnSpan(4)
                     ->schema([
                         Section::make(__('Produto'))
-                            ->columns(3)
+                            ->columns(2)
                             ->icon('heroicon-o-shopping-bag')
                             ->description(__('Crie o seu produto.'))
                             ->schema([
-                                Toggle::make('is_active')
-                                    ->required(),
                                 TextInput::make('name')
+                                    ->label(__('Nome do Produto'))
                                     ->required()
                                     ->maxLength(255),
-                                Group::make()
-                                    ->relationship('stock')
-                                    ->schema([
-                                        TextInput::make('quantity')
-                                            ->required()
-                                            ->maxLength(255),
-                                        TextInput::make('product_id')
-                                            ->default(Product::latest('id')->value('id') + 1)
-                                            ->required()
-                                            ->maxLength(255),
-                                    ]),
+
                                 TextInput::make('price')
                                     ->required()
                                     ->numeric()
                                     ->prefix('$'),
-                                FileUpload::make('image')
-                                    ->image(),
-                                Textarea::make('description')
+
+                                RichEditor::make('description')
                                     ->columnSpanFull(),
                                 TextInput::make('sku')
                                     ->label('SKU')
                                     ->required()
                                     ->maxLength(255),
-                                TextInput::make('category_id')
-                                    ->required()
-                                    ->numeric(),
+                                Select::make('category_id')
+                                    ->options(Category::pluck('name', 'id'))
+                                    ->required(),
+                                Toggle::make('is_active')
+                                    ->required(),
                             ]),
                     ]),
                 Group::make()
@@ -78,13 +71,34 @@ class ProductResource extends Resource
                             ->columns(1)
                             ->icon('heroicon-o-photo')
                             ->description(__('Imagem do produto.'))
-                            ->schema([]),
+                            ->schema([
+                                FileUpload::make('image')
+                                    ->label(__('Imagem do Produto'))
+                                    ->image(),
+                            ]),
                         Section::make(__('Estoque'))
                             ->columnSpan(2)
                             ->columns(1)
                             ->icon('heroicon-o-cube')
                             ->description(__('Controle de estoque.'))
-                            ->schema([]),
+                            ->schema([
+                                Group::make()
+                                    ->relationship('stock')
+                                    ->schema([
+                                        TextInput::make('quantity')
+                                            ->required()
+                                            ->label(__('Quantidade em Estoque'))
+                                            ->numeric()
+                                            ->suffix('unidades')
+                                            ->maxLength(255),
+                                        TextInput::make('product_id')
+                                            ->hidden()
+                                            ->default(Product::latest('id')->value('id') + 1)
+                                            ->required()
+                                            ->maxLength(255),
+                                    ]),
+
+                            ]),
                     ]),
             ]);
     }
