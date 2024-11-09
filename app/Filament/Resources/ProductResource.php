@@ -29,56 +29,63 @@ class ProductResource extends Resource
         return $form
             ->columns(6)
             ->schema([
-                Section::make(__('Produto'))
+                Group::make()
                     ->columnSpan(4)
-                    ->columns(3)
-                    ->icon('heroicon-o-shopping-bag')
-                    ->description(__('Crie o seu produto.'))
                     ->schema([
-                        Toggle::make('is_active')
-                            ->required(),
-                        TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Group::make()
-                            ->relationship('stock')
+                        Section::make(__('Produto'))
+                            ->columns(3)
+                            ->icon('heroicon-o-shopping-bag')
+                            ->description(__('Crie o seu produto.'))
                             ->schema([
-                                TextInput::make('quantity')
+                                Toggle::make('is_active')
+                                    ->required(),
+                                TextInput::make('name')
                                     ->required()
                                     ->maxLength(255),
-                                TextInput::make('product_id')
-                                    ->default(Product::latest('id')->value('id') + 1)
+                                Group::make()
+                                    ->relationship('stock')
+                                    ->schema([
+                                        TextInput::make('quantity')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('product_id')
+                                            ->default(Product::latest('id')->value('id') + 1)
+                                            ->required()
+                                            ->maxLength(255),
+                                    ]),
+                                TextInput::make('price')
+                                    ->required()
+                                    ->numeric()
+                                    ->prefix('$'),
+                                FileUpload::make('image')
+                                    ->image(),
+                                Textarea::make('description')
+                                    ->columnSpanFull(),
+                                TextInput::make('sku')
+                                    ->label('SKU')
                                     ->required()
                                     ->maxLength(255),
+                                TextInput::make('category_id')
+                                    ->required()
+                                    ->numeric(),
                             ]),
-                        TextInput::make('price')
-                            ->required()
-                            ->numeric()
-                            ->prefix('$'),
-                        FileUpload::make('image')
-                            ->image(),
-                        Textarea::make('description')
-                            ->columnSpanFull(),
-                        TextInput::make('sku')
-                            ->label('SKU')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('category_id')
-                            ->required()
-                            ->numeric(),
                     ]),
-                Section::make(__('Imagem'))
+                Group::make()
                     ->columnSpan(2)
-                    ->columns(1)
-                    ->icon('heroicon-o-cube')
-                    ->description(__('Imagem do produto.'))
-                    ->schema([]),
-                Section::make(__('Estoque'))
-                    ->columnSpan(2)
-                    ->columns(1)
-                    ->icon('heroicon-o-cube')
-                    ->description(__('Controle de estoque.'))
-                    ->schema([]),
+                    ->schema([
+                        Section::make(__('Imagem'))
+                            ->columnSpan(2)
+                            ->columns(1)
+                            ->icon('heroicon-o-photo')
+                            ->description(__('Imagem do produto.'))
+                            ->schema([]),
+                        Section::make(__('Estoque'))
+                            ->columnSpan(2)
+                            ->columns(1)
+                            ->icon('heroicon-o-cube')
+                            ->description(__('Controle de estoque.'))
+                            ->schema([]),
+                    ]),
             ]);
     }
 
