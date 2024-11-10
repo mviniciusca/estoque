@@ -35,6 +35,11 @@ class ReportResource extends Resource
         return $form
             ->columns(3)
             ->schema([
+                Forms\Components\Select::make('product_id')
+                    ->label(__('Produto'))
+                    ->required()
+                    ->disabled()
+                    ->options(Product::pluck('name', 'id')),
                 Forms\Components\TextInput::make('minimus')
                     ->required()
                     ->label(__('Quantidade Mínima'))
@@ -48,16 +53,7 @@ class ReportResource extends Resource
                 Forms\Components\Toggle::make('is_dispatch')
                     ->hidden()
                     ->required(),
-                Forms\Components\Select::make('product_id')
-                    ->label(__('Produto'))
-                    ->required()
-                    ->disabled()
-                    ->options(Product::pluck('name', 'id')),
-                Forms\Components\Select::make('stock_id')
-                    ->label(__('Estoque'))
-                    ->disabled()
-                    ->options(Stock::pluck('id', 'id'))
-                    ->required(),
+
             ]);
     }
 
