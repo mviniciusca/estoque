@@ -20,7 +20,7 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationGroup = 'E-commerce';
+    protected static ?string $navigationGroup = 'E-Commerce';
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
@@ -31,6 +31,7 @@ class ProductResource extends Resource
             ->schema([
                 Group::make()
                     ->columnSpan(4)
+                    ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label(__('Produto'))
@@ -55,7 +56,6 @@ class ProductResource extends Resource
                             ->label(__('Ativo'))
                             ->default(true)
                             ->required(),
-
                     ]),
                 Group::make()
                     ->columnSpan(2)
