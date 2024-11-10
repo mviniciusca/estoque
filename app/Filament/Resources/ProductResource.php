@@ -50,24 +50,10 @@ class ProductResource extends Resource
                             ->suffix('un.')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('product_id')
-                            ->label('ID do Produto')
-                            ->hidden()
-                            ->default(Product::latest('id')->value('id') + 1)
-                            ->suffix('un.')
-                            ->required()
-                            ->maxLength(255),
                     ]),
                 Group::make()
                     ->relationship('report')
                     ->schema([
-                        Forms\Components\TextInput::make('product_id')
-                            ->label('ID do Produto')
-                            ->hidden()
-                            ->default(Product::latest('id')->value('id') + 1)
-                            ->suffix('un.')
-                            ->required()
-                            ->maxLength(255),
                         Forms\Components\TextInput::make('minimus')
                             ->label('Estoque Mínimo')
                             ->suffix('un.')
@@ -76,12 +62,6 @@ class ProductResource extends Resource
                         Forms\Components\TextInput::make('maxims')
                             ->label('Estoque Máximo')
                             ->suffix('un.')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('stock_id')
-                            ->label('ID do Estoque')
-                            ->hidden()
-                            ->default(Stock::latest('id')->value('id') + 1)
                             ->required()
                             ->maxLength(255),
                     ]),

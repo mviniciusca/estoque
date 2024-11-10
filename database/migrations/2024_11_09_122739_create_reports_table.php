@@ -18,7 +18,6 @@ return new class() extends Migration {
             $table->integer('maxims')->default(10);
             $table->boolean('is_dispatch')->default(false);
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(Stock::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

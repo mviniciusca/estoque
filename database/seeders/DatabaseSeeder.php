@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
         Location::factory()->create(['product_id' => $product->id]);
         Report::factory()->create([
             'product_id' => $product->id,
-            'stock_id'   => $stock->id,
         ]);
     }
 }
