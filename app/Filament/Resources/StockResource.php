@@ -17,6 +17,12 @@ class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
+    protected static ?string $label = 'Estoque';
+
+    protected static ?string $navigationGroup = 'Gestão & Estoque';
+
+    protected static ?string $navigationLabel = 'Estoque';
+
     protected static ?string $navigationIcon = 'heroicon-o-cube';
 
     public static function form(Form $form): Form
