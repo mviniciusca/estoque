@@ -57,6 +57,27 @@ class ProductResource extends Resource
                             ->required()
                             ->maxLength(255),
                     ]),
+                Group::make()
+                    ->relationship('report')
+                    ->schema([
+                        Forms\Components\TextInput::make('product_id')
+                            ->label('ID do Produto')
+                            ->hidden()
+                            ->default(Product::latest('id')->value('id') + 1)
+                            ->suffix('un.')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('minumus')
+                            ->label('Estoque Mínimo')
+                            ->suffix('un.')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('maxims')
+                            ->label('Estoque Máximo')
+                            ->suffix('un.')
+                            ->required()
+                            ->maxLength(255),
+                    ]),
                 Forms\Components\TextInput::make('category_id')
                     ->required()
                     ->numeric(),
@@ -74,11 +95,12 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category_id')
+                Tables\Columns\TextColumn::make('category.name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('stock.quantity')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
