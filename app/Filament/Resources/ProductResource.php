@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Stock;
 use Filament\Forms;
@@ -28,18 +29,23 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Toggle::make('is_active')
+                    ->label(__('Ativo'))
                     ->default(true)
                     ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->label(__('Produto'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('price')
+                    ->label(__('Preço'))
                     ->required()
                     ->numeric()
                     ->prefix('R$'),
                 Forms\Components\FileUpload::make('image')
+                    ->label(__('Imagem do Produto'))
                     ->image(),
                 Forms\Components\Textarea::make('description')
+                    ->label(__('Descrição'))
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('sku')
                     ->label('SKU')
@@ -68,9 +74,9 @@ class ProductResource extends Resource
                             ->required()
                             ->maxLength(255),
                     ]),
-                Forms\Components\TextInput::make('category_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('category_id')
+                    ->options(Category::pluck('name', 'id'))
+                    ->required(),
             ]);
     }
 
