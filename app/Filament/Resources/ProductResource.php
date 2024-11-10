@@ -67,7 +67,7 @@ class ProductResource extends Resource
                             ->suffix('un.')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('minumus')
+                        Forms\Components\TextInput::make('minimus')
                             ->label('Estoque Mínimo')
                             ->suffix('un.')
                             ->required()
