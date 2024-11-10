@@ -26,6 +26,7 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Toggle::make('is_active')
+                    ->default(true)
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -33,7 +34,7 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('R$'),
                 Forms\Components\FileUpload::make('image')
                     ->image(),
                 Forms\Components\Textarea::make('description')
