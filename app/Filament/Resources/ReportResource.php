@@ -78,7 +78,7 @@ class ReportResource extends Resource
                     ->numeric()
                     ->alignCenter()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('stock.quantity')
+                Tables\Columns\TextColumn::make('product.stock.quantity')
                     ->label(__('Estoque'))
                     ->numeric()
                     ->alignCenter()
@@ -87,22 +87,22 @@ class ReportResource extends Resource
                     ->alignEnd()
                     ->label(__('Situação'))
                     ->default(function ($record) {
-                        if ($record->stock->quantity == 0) {
+                        if ($record->product->stock->quantity == 0) {
                             return 'sem estoque';
-                        } elseif ($record->stock->quantity <= $record->minimus) {
+                        } elseif ($record->product->stock->quantity <= $record->minimus) {
                             return 'baixo estoque';
-                        } elseif ($record->stock->quantity > $record->maxims) {
+                        } elseif ($record->product->stock->quantity > $record->maxims) {
                             return 'excesso de estoque';
                         } else {
                             return 'em estoque';
                         }
                     })
                     ->color(function ($record) {
-                        if ($record->stock->quantity == 0) {
+                        if ($record->product->stock->quantity == 0) {
                             return 'danger';
-                        } elseif ($record->stock->quantity <= $record->minimus) {
+                        } elseif ($record->product->stock->quantity <= $record->minimus) {
                             return 'warning';
-                        } elseif ($record->stock->quantity > $record->maxims) {
+                        } elseif ($record->product->stock->quantity > $record->maxims) {
                             return 'info';
                         } else {
                             return 'success';

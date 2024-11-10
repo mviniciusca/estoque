@@ -21,7 +21,7 @@ class CreateProduct extends CreateRecord
         // // Criar o Report
         $this->record->report()->create([
             'product_id' => $this->record->id,
-            'stock_id'   => $this->record->stock->id,
+            'stock_id'   => $stock->id,
         ]);
     }
 
