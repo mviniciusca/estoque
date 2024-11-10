@@ -17,6 +17,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -117,6 +118,14 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('stock.quantity')
+                    ->label('Estoque')
+                    ->badge()
+                    ->alignCenter()
+                    ->color(function ($record) {
+                        return self::checkStock($record, true);
+                    })
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('is_dispatched')
                     ->alignLeft()
                     ->label(__('Situação'))
@@ -139,9 +148,6 @@ class ProductResource extends Resource
                     ->prefix('R$ ')
                     ->money()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('stock.quantity')
-                    ->label('Estoque')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -159,7 +165,9 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
