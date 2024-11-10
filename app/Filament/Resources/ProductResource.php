@@ -27,56 +27,73 @@ class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(6)
             ->schema([
-                Forms\Components\Toggle::make('is_active')
-                    ->label(__('Ativo'))
-                    ->default(true)
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->label(__('Produto'))
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('price')
-                    ->label(__('Preço'))
-                    ->required()
-                    ->numeric()
-                    ->prefix('R$'),
-                Forms\Components\FileUpload::make('image')
-                    ->label(__('Imagem do Produto'))
-                    ->image(),
-                Forms\Components\Textarea::make('description')
-                    ->label(__('Descrição'))
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('sku')
-                    ->label('SKU')
-                    ->required()
-                    ->maxLength(255),
                 Group::make()
-                    ->relationship('stock')
+                    ->columnSpan(4)
+                    ->columns(3)
                     ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('Produto'))
+                            ->columnSpan(2)
+                            ->prefixIcon('heroicon-o-shopping-bag')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('price')
+                            ->label(__('Preço'))
+                            ->prefixIcon('heroicon-o-currency-dollar')
+                            ->required()
+                            ->numeric()
+                            ->prefix('R$'),
+                        Forms\Components\RichEditor::make('description')
+                            ->label(__('Descrição'))
+                            ->columnSpanFull(),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label(__('Ativo'))
+                            ->default(true)
+                            ->required(),
+                    ]),
+                Group::make()
+                    ->columnSpan(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('sku')
+                            ->label('SKU')
+                            ->prefix('SKU')
+                            ->prefixIcon('heroicon-o-key')
+                            ->unique('product', 'sku')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\FileUpload::make('image')
+                            ->label(__('Imagem do Produto'))
+                            ->image(),
                         Forms\Components\TextInput::make('quantity')
                             ->label('Estoque')
                             ->suffix('un.')
+                            ->prefixIcon('heroicon-o-cube')
                             ->required()
                             ->maxLength(255),
+                        Group::make()
+                            ->relationship('report')
+                            ->schema([
+                                Forms\Components\TextInput::make('minimus')
+                                    ->label('Estoque Mínimo')
+                                    ->prefixIcon('heroicon-o-cube')
+                                    ->suffix('un.')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('maxims')
+                                    ->label('Estoque Máximo')
+                                    ->prefixIcon('heroicon-o-cube')
+                                    ->suffix('un.')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('category_id')
+                                    ->label(__('Categoria'))
+                                    ->options(Category::pluck('name', 'id'))
+                                    ->required(),
+                            ]),
                     ]),
-                Group::make()
-                    ->relationship('report')
-                    ->schema([
-                        Forms\Components\TextInput::make('minimus')
-                            ->label('Estoque Mínimo')
-                            ->suffix('un.')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('maxims')
-                            ->label('Estoque Máximo')
-                            ->suffix('un.')
-                            ->required()
-                            ->maxLength(255),
-                    ]),
-                Forms\Components\Select::make('category_id')
-                    ->options(Category::pluck('name', 'id'))
-                    ->required(),
+
             ]);
     }
 
