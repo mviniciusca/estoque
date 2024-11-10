@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -40,6 +41,22 @@ class ProductResource extends Resource
                     ->label('SKU')
                     ->required()
                     ->maxLength(255),
+                Group::make()
+                    ->relationship('stock')
+                    ->schema([
+                        Forms\Components\TextInput::make('quantity')
+                            ->label('Estoque')
+                            ->suffix('un.')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('product_id')
+                            ->label('ID do Produto')
+                            ->hidden()
+                            ->default(Product::latest('id')->value('id') + 1)
+                            ->suffix('un.')
+                            ->required()
+                            ->maxLength(255),
+                    ]),
                 Forms\Components\TextInput::make('category_id')
                     ->required()
                     ->numeric(),
@@ -100,9 +117,9 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProducts::route('/'),
+            'index'  => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
-            'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'edit'   => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 }
