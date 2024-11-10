@@ -31,10 +31,6 @@ class StockResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('quantity')
                     ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('product_id')
-                    ->required()
                     ->numeric(),
             ]);
     }
