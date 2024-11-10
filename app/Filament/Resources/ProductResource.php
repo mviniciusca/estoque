@@ -4,21 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Category;
 use App\Models\Product;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -27,85 +17,32 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->columns(6)
             ->schema([
-                Group::make()
-                    ->columnSpan(4)
-                    ->schema([
-                        Section::make(__('Produto'))
-                            ->columns(2)
-                            ->icon('heroicon-o-shopping-bag')
-                            ->description(__('Crie o seu produto.'))
-                            ->schema([
-                                TextInput::make('name')
-                                    ->label(__('Nome do Produto'))
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('price')
-                                    ->label(__('Preço'))
-                                    ->required()
-                                    ->numeric()
-                                    ->prefix('R$'),
-                                TextInput::make('sku')
-                                    ->label('SKU')
-                                    ->unique('product', 'sku')
-                                    ->required()
-                                    ->maxLength(255),
-                                Select::make('category_id')
-                                    ->label(__('Categoria'))
-                                    ->options(Category::pluck('name', 'id'))
-                                    ->required(),
-                                RichEditor::make('description')
-                                    ->label(__('Descrição'))
-                                    ->columnSpanFull(),
-                                Toggle::make('is_active')
-                                    ->default(true)
-                                    ->label(__('Ativo'))
-                                    ->required(),
-                            ]),
-                    ]),
-                Group::make()
-                    ->columnSpan(2)
-                    ->schema([
-                        Section::make(__('Imagem'))
-                            ->columnSpan(2)
-                            ->columns(1)
-                            ->icon('heroicon-o-photo')
-                            ->description(__('Imagem do produto.'))
-                            ->schema([
-                                FileUpload::make('image')
-                                    ->label(__('Imagem do Produto'))
-                                    ->image(),
-                            ]),
-                        Section::make(__('Estoque'))
-                            ->columnSpan(2)
-                            ->columns(1)
-                            ->icon('heroicon-o-cube')
-                            ->description(__('Controle de estoque.'))
-                            ->schema([
-                                Group::make()
-                                    ->relationship('stock')
-                                    ->schema([
-                                        TextInput::make('quantity')
-                                            ->required()
-                                            ->label(__('Quantidade em Estoque'))
-                                            ->numeric()
-                                            ->suffix('unidades')
-                                            ->maxLength(255),
-                                        TextInput::make('product_id')
-                                            ->hidden()
-                                            ->default(Product::latest('id')->value('id') + 1)
-                                            ->required()
-                                            ->maxLength(255),
-                                    ]),
-
-                            ]),
-                    ]),
+                Forms\Components\Toggle::make('is_active')
+                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('price')
+                    ->required()
+                    ->numeric()
+                    ->prefix('$'),
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('sku')
+                    ->label('SKU')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('category_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -113,40 +50,19 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                ToggleColumn::make('is_active')
-                    ->label('Ativo'),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->money()
+                    ->sortable(),
+                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('stock.quantity')
-                    ->label('Estoque')
-                    ->badge()
-                    ->alignCenter()
-                    ->color(function ($record) {
-                        return self::checkStock($record, true);
-                    })
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('is_dispatched')
-                    ->alignLeft()
-                    ->label(__('Situação'))
-                    ->default(function ($record) {
-                        return self::checkStock($record, false);
-                    })
-                    ->color(function ($record) {
-                        return self::checkStock($record, true);
-                    })
-                    ->badge(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Produto')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label('Categoria')
+                Tables\Columns\TextColumn::make('category_id')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->label('Preço')
-                    ->prefix('R$ ')
-                    ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -165,9 +81,7 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
-                ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -186,28 +100,9 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListProducts::route('/'),
+            'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
-            'edit'   => Pages\EditProduct::route('/{record}/edit'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
-    }
-
-    /**
-     * Summary of checkStock
-     * @param mixed $record
-     * @param bool $isColor
-     * @return string
-     */
-    public static function checkStock($record, bool $isColor): string
-    {
-        if ($record->stock->quantity == 0) {
-            return $isColor ? 'danger' : 'sem estoque';
-        } elseif ($record->stock->quantity <= $record->stock->report->minimus) {
-            return $isColor ? 'warning' : 'baixo estoque';
-        } elseif ($record->stock->quantity > $record->stock->report->maxims) {
-            return $isColor ? 'info' : 'excesso de estoque';
-        } else {
-            return $isColor ? 'success' : 'em estoque';
-        }
     }
 }
