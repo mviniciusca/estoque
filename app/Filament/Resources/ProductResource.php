@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
+use App\Models\Stock;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Form;
@@ -75,6 +76,12 @@ class ProductResource extends Resource
                         Forms\Components\TextInput::make('maxims')
                             ->label('Estoque Máximo')
                             ->suffix('un.')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('stock_id')
+                            ->label('ID do Estoque')
+                            ->hidden()
+                            ->default(Stock::latest('id')->value('id') + 1)
                             ->required()
                             ->maxLength(255),
                     ]),
