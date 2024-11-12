@@ -47,17 +47,15 @@ class ProductResource extends Resource
                                     ->required()
                                     ->numeric()
                                     ->prefix('R$'),
+
+                                Forms\Components\RichEditor::make('description')
+                                    ->label(__('Descrição'))
+                                    ->columnSpanFull(),
                                 Forms\Components\Select::make('category_id')
                                     ->label(__('Categoria'))
                                     ->columnSpanFull()
                                     ->options(Category::pluck('name', 'id'))
                                     ->required(),
-                                Forms\Components\FileUpload::make('image')
-                                    ->label(__('Imagem do Produto'))
-                                    ->image(),
-                                Forms\Components\RichEditor::make('description')
-                                    ->label(__('Descrição'))
-                                    ->columnSpanFull(),
                                 Forms\Components\Toggle::make('is_active')
                                     ->label(__('Ativo'))
                                     ->default(true)
@@ -67,6 +65,10 @@ class ProductResource extends Resource
                 Group::make()
                     ->columnSpan(2)
                     ->schema([
+                        Forms\Components\FileUpload::make('image')
+                            ->label(__('Imagem do Produto'))
+                            ->image(),
+
                         Section::make(__('SKU & Estoque'))
                             ->icon('heroicon-o-cube')
                             ->description('Informações de estoque e controle de produto.')
