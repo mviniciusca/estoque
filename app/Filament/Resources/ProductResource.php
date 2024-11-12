@@ -106,6 +106,10 @@ class ProductResource extends Resource
                                     ]),
 
                             ]),
+                        Section::make(__('Localização Setorial'))
+                            ->icon('heroicon-o-map-pin')
+                            ->description(__('Mapeamento Logístico do Produto'))
+                            ->schema([]),
                     ]),
 
             ]);
