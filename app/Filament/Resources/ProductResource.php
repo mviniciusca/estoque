@@ -74,7 +74,6 @@ class ProductResource extends Resource
                         Forms\Components\FileUpload::make('image')
                             ->label(__('Imagem do Produto'))
                             ->image(),
-
                         Section::make(__('Estoque'))
                             ->icon('heroicon-o-cube')
                             ->description('Informações de estoque e controle de produto.')
