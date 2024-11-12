@@ -36,7 +36,7 @@ class ProductResource extends Resource
                         Section::make(__('Produto'))
                             ->description(__('Informações sobre o seu produto.'))
                             ->icon('heroicon-o-shopping-bag')
-                            ->columns(2)
+                            ->columns(3)
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->label(__('Produto'))
@@ -47,7 +47,10 @@ class ProductResource extends Resource
                                     ->required()
                                     ->numeric()
                                     ->prefix('R$'),
-
+                                Forms\Components\TextInput::make('sku')
+                                    ->label('SKU')
+                                    ->required()
+                                    ->maxLength(255),
                                 Forms\Components\RichEditor::make('description')
                                     ->label(__('Descrição'))
                                     ->columnSpanFull(),
@@ -69,46 +72,33 @@ class ProductResource extends Resource
                             ->label(__('Imagem do Produto'))
                             ->image(),
 
-                        Section::make(__('SKU & Estoque'))
+                        Section::make(__('Estoque'))
                             ->icon('heroicon-o-cube')
                             ->description('Informações de estoque e controle de produto.')
                             ->schema([
 
                                 Group::make()
-                                    ->columns(1)
-                                    ->schema([Forms\Components\TextInput::make('sku')
-                                        ->label('SKU')
-                                        ->unique('product', 'sku')
-                                        ->prefixIcon('heroicon-o-key')
-                                        ->required()
-                                        ->maxLength(255),
-                                        Group::make()
-                                            ->relationship('stock')
-                                            ->schema([
-                                                Forms\Components\TextInput::make('quantity')
-                                                    ->label('Estoque')
-                                                    ->prefixIcon('heroicon-o-cube')
-                                                    ->suffix('un.')
-                                                    ->required()
-                                                    ->maxLength(255),
-                                            ]),
-                                        Group::make()
-                                            ->columns()
-                                            ->relationship('report')
-                                            ->schema([
-                                                Forms\Components\TextInput::make('minimus')
-                                                    ->label('Estoque Mínimo')
-                                                    ->prefixIcon('heroicon-o-cube')
-                                                    ->suffix('un.')
-                                                    ->required()
-                                                    ->maxLength(255),
-                                                Forms\Components\TextInput::make('maxims')
-                                                    ->prefixIcon('heroicon-o-cube')
-                                                    ->label('Estoque Máximo')
-                                                    ->suffix('un.')
-                                                    ->required()
-                                                    ->maxLength(255),
-                                            ]),
+                                    ->relationship('stock')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('quantity')
+                                            ->label('Estoque')
+                                            ->suffix('un.')
+                                            ->required()
+                                            ->maxLength(255),
+                                    ]),
+                                Group::make()
+                                    ->relationship('report')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('minimus')
+                                            ->label('Estoque Mínimo')
+                                            ->suffix('un.')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('maxims')
+                                            ->label('Estoque Máximo')
+                                            ->suffix('un.')
+                                            ->required()
+                                            ->maxLength(255),
                                     ]),
 
                             ]),
