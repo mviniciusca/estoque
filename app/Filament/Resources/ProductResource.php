@@ -47,13 +47,14 @@ class ProductResource extends Resource
                                     ->required()
                                     ->numeric()
                                     ->prefix('R$'),
+                                Forms\Components\Select::make('category_id')
+                                    ->label(__('Categoria'))
+                                    ->columnSpanFull()
+                                    ->options(Category::pluck('name', 'id'))
+                                    ->required(),
                                 Forms\Components\FileUpload::make('image')
                                     ->label(__('Imagem do Produto'))
                                     ->image(),
-                                Forms\Components\Select::make('category_id')
-                                    ->label(__('Categoria'))
-                                    ->options(Category::pluck('name', 'id'))
-                                    ->required(),
                                 Forms\Components\RichEditor::make('description')
                                     ->label(__('Descrição'))
                                     ->columnSpanFull(),
