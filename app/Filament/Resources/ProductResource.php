@@ -80,7 +80,6 @@ class ProductResource extends Resource
                                         ->label('SKU')
                                         ->unique('product', 'sku')
                                         ->prefixIcon('heroicon-o-key')
-                                        ->suffix('UNIQUE ID')
                                         ->required()
                                         ->maxLength(255),
                                         Group::make()
