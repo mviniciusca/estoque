@@ -67,6 +67,25 @@ class ProductResource extends Resource
                                     ->default(true)
                                     ->required(),
                             ]),
+                        Section::make(__('Localização Setorial'))
+                            ->icon('heroicon-o-map-pin')
+                            ->description(__('Mapeamento Logístico do Produto'))
+                            ->relationship('location')
+                            ->columns(2)
+                            ->schema([
+                                Forms\Components\TextInput::make('section')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->prefixIcon('heroicon-o-rectangle-stack')
+                                    ->label(__('Seção Logística'))
+                                    ->helperText(__('Localização do produto')),
+                                Forms\Components\TextInput::make('geocode')
+                                    ->prefixIcon('heroicon-o-map')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->label(__('Coordenadas Logísticas'))
+                                    ->helperText(__('Como chegar ao produto')),
+                            ]),
                     ]),
                 Group::make()
                     ->columnSpan(2)
@@ -106,10 +125,6 @@ class ProductResource extends Resource
                                     ]),
 
                             ]),
-                        Section::make(__('Localização Setorial'))
-                            ->icon('heroicon-o-map-pin')
-                            ->description(__('Mapeamento Logístico do Produto'))
-                            ->schema([]),
                     ]),
 
             ]);
