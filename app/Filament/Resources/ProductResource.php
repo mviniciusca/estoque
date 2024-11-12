@@ -52,6 +52,7 @@ class ProductResource extends Resource
                                     ->prefix('R$'),
                                 Forms\Components\TextInput::make('sku')
                                     ->label('SKU')
+                                    ->numeric()
                                     ->prefixIcon('heroicon-o-key')
                                     ->required()
                                     ->maxLength(255),
