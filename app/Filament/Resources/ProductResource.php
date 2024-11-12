@@ -79,6 +79,8 @@ class ProductResource extends Resource
                                     ->schema([Forms\Components\TextInput::make('sku')
                                         ->label('SKU')
                                         ->unique('product', 'sku')
+                                        ->prefixIcon('heroicon-o-key')
+                                        ->suffix('UNIQUE ID')
                                         ->required()
                                         ->maxLength(255),
                                         Group::make()
@@ -86,6 +88,7 @@ class ProductResource extends Resource
                                             ->schema([
                                                 Forms\Components\TextInput::make('quantity')
                                                     ->label('Estoque')
+                                                    ->prefixIcon('heroicon-o-cube')
                                                     ->suffix('un.')
                                                     ->required()
                                                     ->maxLength(255),
@@ -96,10 +99,12 @@ class ProductResource extends Resource
                                             ->schema([
                                                 Forms\Components\TextInput::make('minimus')
                                                     ->label('Estoque Mínimo')
+                                                    ->prefixIcon('heroicon-o-cube')
                                                     ->suffix('un.')
                                                     ->required()
                                                     ->maxLength(255),
                                                 Forms\Components\TextInput::make('maxims')
+                                                    ->prefixIcon('heroicon-o-cube')
                                                     ->label('Estoque Máximo')
                                                     ->suffix('un.')
                                                     ->required()
