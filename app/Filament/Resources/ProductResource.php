@@ -39,6 +39,7 @@ class ProductResource extends Resource
                             ->columns(3)
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->prefixIcon('heroicon-o-shopping-bag')
                                     ->label(__('Produto'))
                                     ->required()
                                     ->maxLength(255),
@@ -49,6 +50,7 @@ class ProductResource extends Resource
                                     ->prefix('R$'),
                                 Forms\Components\TextInput::make('sku')
                                     ->label('SKU')
+                                    ->prefixIcon('heroicon-o-key')
                                     ->required()
                                     ->maxLength(255),
                                 Forms\Components\RichEditor::make('description')
@@ -56,6 +58,7 @@ class ProductResource extends Resource
                                     ->columnSpanFull(),
                                 Forms\Components\Select::make('category_id')
                                     ->label(__('Categoria'))
+                                    ->prefixIcon('heroicon-o-tag')
                                     ->columnSpanFull()
                                     ->options(Category::pluck('name', 'id'))
                                     ->required(),
