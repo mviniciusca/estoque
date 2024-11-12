@@ -76,13 +76,13 @@ class ProductResource extends Resource
                             ->icon('heroicon-o-cube')
                             ->description('Informações de estoque e controle de produto.')
                             ->schema([
-
                                 Group::make()
                                     ->relationship('stock')
                                     ->schema([
                                         Forms\Components\TextInput::make('quantity')
-                                            ->label('Estoque')
+                                            ->label('Estoque Disponível')
                                             ->suffix('un.')
+                                            ->prefixIcon('heroicon-o-cube')
                                             ->required()
                                             ->maxLength(255),
                                     ]),
@@ -92,11 +92,13 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('minimus')
                                             ->label('Estoque Mínimo')
                                             ->suffix('un.')
+                                            ->prefixIcon('heroicon-o-cube')
                                             ->required()
                                             ->maxLength(255),
                                         Forms\Components\TextInput::make('maxims')
                                             ->label('Estoque Máximo')
                                             ->suffix('un.')
+                                            ->prefixIcon('heroicon-o-cube')
                                             ->required()
                                             ->maxLength(255),
                                     ]),
