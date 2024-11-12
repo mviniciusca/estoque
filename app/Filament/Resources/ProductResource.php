@@ -34,7 +34,7 @@ class ProductResource extends Resource
                     ->columnSpan(4)
                     ->schema([
                         Section::make(__('Produto'))
-                            ->description(__('Crie ou edite o seu produto.'))
+                            ->description(__('Informações sobre o seu produto.'))
                             ->icon('heroicon-o-shopping-bag')
                             ->columns(2)
                             ->schema([
@@ -66,34 +66,39 @@ class ProductResource extends Resource
                 Group::make()
                     ->columnSpan(2)
                     ->schema([
-                        Forms\Components\TextInput::make('sku')
-                            ->label('SKU')
-                            ->required()
-                            ->maxLength(255),
-                        Group::make()
-                            ->relationship('stock')
+                        Section::make(__('SKU & Estoque'))
+                            ->icon('heroicon-o-cube')
+                            ->description('Informações de estoque e controle de produto.')
                             ->schema([
-                                Forms\Components\TextInput::make('quantity')
-                                    ->label('Estoque')
-                                    ->suffix('un.')
+                                Forms\Components\TextInput::make('sku')
+                                    ->label('SKU')
                                     ->required()
                                     ->maxLength(255),
-                            ]),
-                        Group::make()
-                            ->relationship('report')
-                            ->schema([
-                                Forms\Components\TextInput::make('minimus')
-                                    ->label('Estoque Mínimo')
-                                    ->suffix('un.')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('maxims')
-                                    ->label('Estoque Máximo')
-                                    ->suffix('un.')
-                                    ->required()
-                                    ->maxLength(255),
-                            ]),
+                                Group::make()
+                                    ->relationship('stock')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('quantity')
+                                            ->label('Estoque')
+                                            ->suffix('un.')
+                                            ->required()
+                                            ->maxLength(255),
+                                    ]),
+                                Group::make()
+                                    ->relationship('report')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('minimus')
+                                            ->label('Estoque Mínimo')
+                                            ->suffix('un.')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('maxims')
+                                            ->label('Estoque Máximo')
+                                            ->suffix('un.')
+                                            ->required()
+                                            ->maxLength(255),
+                                    ]),
 
+                            ]),
                     ]),
 
             ]);
